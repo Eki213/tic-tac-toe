@@ -1,0 +1,55 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    position: relative;
+    flex: 1;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    width: 30vw;
+    aspect-ratio: 1/1;
+    margin: 0 auto;
+}
+
+.cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+section.intro-screen {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+input, label, button {
+    display: block;
+    font-family: inherit;
+    font-size: 100%;
+    padding: 5px;
+    width: 100%;
+}
+
+.game-button {
+    width: max-content;
+    margin: 0 auto;
+}
+
+.hidden {
+    visibility: hidden;
+}
