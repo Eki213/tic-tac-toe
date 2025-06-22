@@ -4,52 +4,149 @@
     padding: 0;
 }
 
+:root {
+    font-size: clamp(1rem, 0.8rem + 1.5vw, 2rem);
+}
+
 body {
+    font-family: "Josefin Sans", sans-serif;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    background-color: #1E1E2C;
+    color: white;
 }
 
 main {
     position: relative;
-    flex: 1;
 }
 
 .board {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    width: 30vw;
+    width: max(7.5em, 30vw);
     aspect-ratio: 1/1;
+    font-size: max(2.5rem, 3.5vw);
     margin: 0 auto;
+    padding: 1rem;
 }
 
 .cell {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 0;
+    background: none;
+    border: 2px solid white;
+    border-right: none;
+    border-bottom: none;
+}
+
+.cell:nth-child(3n + 1) {
+    border-left: none;
+}
+
+.cell:nth-child(-n + 3) {
+    border-top: none;
+}
+
+[data-mark] {
+    font-family: "Indie Flower", sans-serif;
+}
+
+[data-mark="X"] {
+    color: rgb(106, 126, 240);
+}
+
+[data-mark="O"] {
+    color: rgb(214, 102, 102);
 }
 
 section.intro-screen {
     position: absolute;
-    top: 0;
+    top: 50%;
     left: 50%;
-    transform: translate(-50%);
+    transform: translate(-50%, -50%);
+    width: min(89vw, 30rem);
+    font-size: 1.2rem;
 }
 
 input, label, button {
     display: block;
     font-family: inherit;
+    color: inherit;
     font-size: 100%;
     padding: 5px;
     width: 100%;
 }
 
-.game-button {
+input {
+    margin-bottom: 1.5rem;
+    padding: 0.4rem;
+    border-radius: 0.4rem;
+    border: 3px solid white;
+    background: none;
+}
+
+input:focus {
+    outline: 2px solid white;
+}
+
+input::placeholder {
+    color: rgb(158, 158, 158);
+}
+
+button {
+    cursor: pointer;
+}
+
+button:not(.cell) {
     width: max-content;
     margin: 0 auto;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    background: none;
+    color: white;
+    border: 2px solid white;
+}
+
+button:not(.cell):hover {
+    box-shadow: 0px 0px 2px 2px rgb(214, 213, 213);
+}
+
+button:not(.cell):active {
+    box-shadow: 0px 0px 2px 3px rgb(238, 238, 238);
+}
+
+.game-button {
+    font-size: max(1.2rem, 1.6vw);
 }
 
 .hidden {
     visibility: hidden;
+}
+
+header {
+    padding: 1rem;
+    text-align: center;
+    margin-bottom: 7vh;
+    background: #2d2d44;
+    text-shadow: 0.1rem 0.2rem 3px black;
+}
+
+header h1 {
+    font-size: max(1.8rem, 2vw);
+}
+
+.announcements {
+    text-align: center;
+    height: 1.2em;
+    font-size: max(1.2rem, 1.6vw);
+}
+
+.game {
+    display: flex;
+    flex-direction: column;
+    gap: 1.8rem;
 }

@@ -86,7 +86,7 @@ const game = (function () {
 const displayController = (function() {
     const gameContainer = document.querySelector(".game");
     const gridContainer = document.querySelector(".board");
-    const resultsContainer = document.querySelector(".results");
+    const announcementsContainer = document.querySelector(".announcements");
     const introScreen = document.querySelector(".intro-screen");
     const changeNamesButton = document.querySelector("button[type='submit']");
     const gameButton = document.querySelector(".game-button");
@@ -107,20 +107,35 @@ const displayController = (function() {
         cells.forEach(updateCell);
     };
 
-    const updateTurnAnnouncement = function() {
-        const currentPlayer = game.getCurrentPlayer();
-        resultsContainer.textContent = `${currentPlayer.getName()}'s turn (${currentPlayer.getMark()})`;
+    const applyMarkStyle = function(element, mark) {
+        element.textContent = mark;
+        element.dataset.mark = mark;
     };
 
-    const updateCell = (cell) => cell.textContent = gameboard.getMark(cell.dataset.index);
+    const updateTurnAnnouncement = function() {
+        const currentPlayer = game.getCurrentPlayer();
+        const span = document.createElement("span");
+        const mark = currentPlayer.getMark();
+        applyMarkStyle(span, mark);
 
-    const displayResults = function() {
+        announcementsContainer.textContent = `${currentPlayer.getName()}'s turn (`;
+        announcementsContainer.appendChild(span);
+        announcementsContainer.append(")"); 
+    };
+
+    const updateCell = function (cell) { 
+        const mark = gameboard.getMark(cell.dataset.index);
+        applyMarkStyle(cell, mark);
+    };
+
+    const endGameHandler = function() {
         const winner = game.getWinner();
         if (winner) {
-            resultsContainer.textContent = `The winner is ${winner.getName()}!`
+            announcementsContainer.textContent = `The winner is ${winner.getName()}!`
         } else {
-            resultsContainer.textContent = "It's a tie!";
+            announcementsContainer.textContent = "It's a tie!";
         }
+        gameButton.textContent = "Play Again";
     };
 
     const clickHandlerBoard = function (event) {
@@ -132,20 +147,20 @@ const displayController = (function() {
         updateCell(cell);
         updateTurnAnnouncement();
 
-        if (game.endGame()) displayResults();
+        if (game.endGame()) endGameHandler();
     };
 
     gridContainer.addEventListener("click", clickHandlerBoard);
 
     const gameButtonHandler = function() {
         if (!gameStarted) {
-            gameButton.textContent = "Play Again";
             gameStarted = true;
         } else {
             game.resetGame();
             updateGrid();
         }
 
+        gameButton.textContent = "Restart";
         updateTurnAnnouncement();
     };
 
